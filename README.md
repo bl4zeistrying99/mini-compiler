@@ -1,4 +1,4 @@
-## Mini Compiler – Lexer Phase
+## Mini Compiler – Parser Phase
 
 This project implements a basic lexical analyzer in C.
 
@@ -7,11 +7,13 @@ This project implements a basic lexical analyzer in C.
 - Identifies identifiers
 - Identifies numbers
 - Handles operators and delimiters
+- Parses grammar
 
 ### Files
 - lexer.c – lexer implementation
 - input.txt – sample input program
+- lexerparser.c - lexer+parser implementation
 
 ### Build & Run
-gcc lexer.c -o lexer
-./lexer input.txt
+gcc lexerparser.c -o parser
+./parser input.txt
