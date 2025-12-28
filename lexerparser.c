@@ -138,7 +138,7 @@ void parseTerm()
 void parseExpression()
 {
   parseTerm();
-  if(currentToken.type==PLUS)
+  while (currentToken.type == PLUS)
   {
     match(PLUS);
     parseTerm();
@@ -158,7 +158,7 @@ int main()
     
     parseExpression();
     
-    if(currentToken.type=!EOF_TOKEN)
+    if(currentToken.type!=EOF_TOKEN)
     {
       printf("UNEXPECTED TOKEN: got %s\n",currentToken.value);
       return 1;
