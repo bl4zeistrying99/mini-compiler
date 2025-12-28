@@ -106,7 +106,7 @@ Token getNextToken()
 
 void match(TokenType expected)
 {
-  if(currentToken.type=expected)
+  if(currentToken.type==expected)
   {
     currentToken=getNextToken();
   }
