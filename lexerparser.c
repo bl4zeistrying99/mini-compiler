@@ -132,16 +132,14 @@ void parseTerm()
   {
     printf("Syntax Error in term %s\n",currentToken.value);
     exit(1);
+  }
   
 }
 
 void parseExpression()
 {
   parseTerm();
- HEAD
-  while(currentToken.type==PLUS)
   while (currentToken.type == PLUS)
- d60987dbecc10eafecf9e7529afeba7d768bb0d2
   {
     match(PLUS);
     parseTerm();
@@ -199,15 +197,10 @@ int main()
     }
     
     currentToken=getNextToken();
- HEAD
     while(currentToken.type!=EOF_TOKEN)
     {
     parseStatement();
     }
-    
-    parseExpression();
-    
- d60987dbecc10eafecf9e7529afeba7d768bb0d2
     if(currentToken.type!=EOF_TOKEN)
     {
       printf("UNEXPECTED TOKEN: got %s\n",currentToken.value);
