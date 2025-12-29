@@ -106,7 +106,7 @@ Token getNextToken()
 
 void match(TokenType expected)
 {
-  if(currentToken.type=expected)
+  if(currentToken.type==expected)
   {
     currentToken=getNextToken();
   }
@@ -138,11 +138,52 @@ void parseTerm()
 void parseExpression()
 {
   parseTerm();
-  if(currentToken.type==PLUS)
+  while(currentToken.type==PLUS)
   {
     match(PLUS);
     parseTerm();
   }
+}
+void parseDecl() //int x = expr ;
+{
+  match(KEYWORD);
+  match(IDENTIFIER);
+  match(ASSIGN);
+  parseExpression();
+  match(SEMICOLON);
+}
+void parsePrint() //print x ;
+{
+  match(KEYWORD);
+  match(IDENTIFIER);
+  match(SEMICOLON);
+}
+void parseAssign() //x = expr;
+{
+   match(IDENTIFIER);
+   match(ASSIGN);
+   parseExpression();
+   match(SEMICOLON);
+}
+void parseStatement()
+{
+  if(currentToken.type==KEYWORD && strcmp(currentToken.value,"int")==0)
+  {
+    parseDecl();
+  }
+  else if(currentToken.type==KEYWORD && strcmp(currentToken.value,"print")==0)
+  {
+    parsePrint();
+  }
+  else if(currentToken.type==IDENTIFIER)
+  { 
+    parseAssign();
+  }
+  else
+  {
+    printf("Syntax Error: invalid statement %s\n",currentToken.value);
+    exit(1);
+  } 
 }
 
 int main()
@@ -155,10 +196,11 @@ int main()
     }
     
     currentToken=getNextToken();
-    
-    parseExpression();
-    
-    if(currentToken.type=!EOF_TOKEN)
+    while(currentToken.type!=EOF_TOKEN)
+    {
+    parseStatement();
+    }
+    if(currentToken.type!=EOF_TOKEN)
     {
       printf("UNEXPECTED TOKEN: got %s\n",currentToken.value);
       return 1;
